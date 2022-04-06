@@ -1,36 +1,36 @@
 import type { RoomState } from "@/interfaces";
 
-// export const getEmptyFloor = () => {
-//   return [
-//     { id: "0", type: "", x: 0, y: 0, obstacles: [] },
-//     { id: "1", type: "", x: 1, y: 0, obstacles: [] },
-//     { id: "2", type: "", x: 2, y: 0, obstacles: [] },
-//     { id: "3", type: "", x: 0, y: 1, obstacles: [] },
-//     { id: "4", type: "empty", x: 1, y: 1, obstacles: [] },
-//     { id: "5", type: "", x: 2, y: 1, obstacles: [] },
-//     { id: "6", type: "", x: 0, y: 2, obstacles: [] },
-//     { id: "7", type: "", x: 1, y: 2, obstacles: [] },
-//     { id: "8", type: "", x: 2, y: 2, obstacles: [] },
-//   ]
-// }
-
-export const getEmptyFloor = () => [
-  [
+export const getEmptyFloor = () => {
+  return [
     { id: "0", type: "", x: 0, y: 0, obstacles: [] },
     { id: "1", type: "", x: 1, y: 0, obstacles: [] },
     { id: "2", type: "", x: 2, y: 0, obstacles: [] },
-  ],
-  [
     { id: "3", type: "", x: 0, y: 1, obstacles: [] },
     { id: "4", type: "empty", x: 1, y: 1, obstacles: [] },
     { id: "5", type: "", x: 2, y: 1, obstacles: [] },
-  ],
-  [
     { id: "6", type: "", x: 0, y: 2, obstacles: [] },
     { id: "7", type: "", x: 1, y: 2, obstacles: [] },
     { id: "8", type: "", x: 2, y: 2, obstacles: [] },
-  ],
-];
+  ]
+}
+
+// export const getEmptyFloor = () => [
+//   [
+//     { id: "0", type: "", x: 0, y: 0, obstacles: [] },
+//     { id: "1", type: "", x: 1, y: 0, obstacles: [] },
+//     { id: "2", type: "", x: 2, y: 0, obstacles: [] },
+//   ],
+//   [
+//     { id: "3", type: "", x: 0, y: 1, obstacles: [] },
+//     { id: "4", type: "empty", x: 1, y: 1, obstacles: [] },
+//     { id: "5", type: "", x: 2, y: 1, obstacles: [] },
+//   ],
+//   [
+//     { id: "6", type: "", x: 0, y: 2, obstacles: [] },
+//     { id: "7", type: "", x: 1, y: 2, obstacles: [] },
+//     { id: "8", type: "", x: 2, y: 2, obstacles: [] },
+//   ],
+// ];
 
 export const addNewRooms = (state: RoomState) => {
   const activeElement = state.activeElement;

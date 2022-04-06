@@ -41,9 +41,6 @@ const { rooms, showTypes, floorSize } = storeToRefs(store);
 // const roomsPerLine = rooms.value.filter((room) => room.y === 0).length;
 // const roomWrapperWidth = 58 * roomsPerLine + 2 + roomsPerLine * 4;
 const raz = store.raz;
-const roomsToDisplay = [];
-store.getRooms
-store.getRooms;
 </script>
 
 <style lang="scss">

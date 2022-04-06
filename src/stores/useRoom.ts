@@ -20,7 +20,7 @@ const types = {
   empty: "Empty",
 };
 
-const rooms: Room[][] = getEmptyFloor();
+const rooms: Room[] = getEmptyFloor();
 
 export const useRoomStore = defineStore("roomStore", {
   state: (): RoomState => {
@@ -36,7 +36,6 @@ export const useRoomStore = defineStore("roomStore", {
     raz() {
       this.rooms = getEmptyFloor();
       this.floorSize = '188px';
-      console.log(this.rooms);
     },
     toggleType(event?: Event) {
       if (event) {
@@ -68,8 +67,5 @@ export const useRoomStore = defineStore("roomStore", {
     getTypes() {
       return types;
     },
-    getRooms() {
-      console.log(rooms);
-    }
   },
 });

@@ -11,7 +11,7 @@ export interface RoomState {
   showObstacles: boolean;
   activeElement: string | null;
   floorSize: string;
-  rooms: Room[][];
+  rooms: Room[];
 }
 
 export interface PotentialSuper {
