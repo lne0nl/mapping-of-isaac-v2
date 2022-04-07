@@ -4,6 +4,7 @@ import { useRoomStore } from '@/stores/useRoom';
 
 const store = useRoomStore();
 const types = Object.keys(store.getTypes);
+types.splice(types.indexOf('super') - 1, 2);
 const selectType = (e: Event) => {
   store.changeType(e);
   store.setSecret();

@@ -18,6 +18,8 @@ const types = {
   treasure: "Treasure Room",
   vault: "Vault",
   empty: "Empty",
+  secret: "Secret Room",
+  super: "Super Secret Room",
 };
 
 const rooms: Line[] = getEmptyFloor();
@@ -70,7 +72,7 @@ export const useRoomStore = defineStore("roomStore", {
 
       this.rooms.forEach((line) => {
         line.forEach((room) => {
-          if (room.type === 'secret') this.rooms[room.y][room.x].type = '';
+          if (room.type === "secret") this.rooms[room.y][room.x].type = "";
           if (room.type) return;
 
           const topRoom = this.rooms[room.y - 1]
@@ -142,18 +144,21 @@ export const useRoomStore = defineStore("roomStore", {
             validRoomCount += 1;
 
           if (validRoomCount >= 3) secretRooms.push({ x: room.x, y: room.y });
-          if (validRoomCount === 2) jockerSecretRooms.push({ x: room.x, y: room.y });
+          if (validRoomCount === 2)
+            jockerSecretRooms.push({ x: room.x, y: room.y });
         });
       });
 
       if (!secretRooms.length && !jockerSecretRooms.length) return;
       if (secretRooms.length) {
         secretRooms.forEach((room) => {
-          this.rooms[room.y][room.x].type = 'secret';
+          this.rooms[room.y][room.x].type = "secret";
           return;
         });
       } else if (jockerSecretRooms.length) {
-        jockerSecretRooms.forEach((room) => this.rooms[room.y][room.x].type = 'secret');
+        jockerSecretRooms.forEach(
+          (room) => (this.rooms[room.y][room.x].type = "secret")
+        );
       }
     },
   },
