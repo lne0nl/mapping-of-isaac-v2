@@ -6,19 +6,21 @@
   </header>
   <main>
     <div class="room-wrapper" :style="{ width: floorSize }">
-      <Room
-        v-for="(room) in rooms"
-        :title="room.type ? store.getTitle(room.type) : ''"
-        :class="room.type ? 'type' : ''"
-        :id="room.id"
-        :key="room.id"
-        :type="room.type"
-        :obstacles="room.obstacles"
-        :tabindex="showTypes ? -1 : 0"
-        :data-x="room.x"
-        :data-y="room.y"
-        @click="store.toggleType"
-      />
+      <template v-for="(line) in rooms">
+        <Room
+          v-for="(room) in line"
+          :title="room.type ? store.getTitle(room.type) : ''"
+          :class="room.type ? 'type' : ''"
+          :id="room.id"
+          :key="room.id"
+          :type="room.type"
+          :obstacles="room.obstacles"
+          :tabindex="showTypes ? -1 : 0"
+          :data-x="room.x"
+          :data-y="room.y"
+          @click="store.toggleType"
+        />
+      </template>
     </div>
     <Types v-if="showTypes" />
     <div class="actions">

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import type { Room, RoomState } from "@/interfaces";
-import { addNewRooms, getEmptyFloor } from "@/utils";
+import type { Line, RoomState } from "@/interfaces";
+import { getEmptyFloor, addNewRooms } from "@/utils";
 
 const types = {
   arcade: "Arcade Room",
@@ -20,29 +20,31 @@ const types = {
   empty: "Empty",
 };
 
-const rooms: Room[] = getEmptyFloor();
+const rooms: Line[] = getEmptyFloor();
 
 export const useRoomStore = defineStore("roomStore", {
   state: (): RoomState => {
     return {
       showTypes: false,
       showObstacles: false,
-      activeElement: null,
-      floorSize: '188px',
+      activeElement: { x: 0, y: 0 },
+      floorSize: "188px",
       rooms,
     };
   },
   actions: {
     raz() {
       this.rooms = getEmptyFloor();
-      this.floorSize = '188px';
+      this.floorSize = "188px";
     },
     toggleType(event?: Event) {
       if (event) {
-        const activeElementId = (event.target as HTMLInputElement).id;
-        if (activeElementId) {
-          this.activeElement = activeElementId;
-          this.showObstacles = !!this.rooms[+activeElementId].type;
+        const lineIndex = (event.target as HTMLInputElement).dataset.y;
+        const columnIndex = (event.target as HTMLInputElement).dataset.x;
+
+        if (columnIndex && lineIndex) {
+          this.activeElement = { y: +lineIndex, x: +columnIndex };
+          this.showObstacles = !!this.rooms[+lineIndex][+columnIndex].type;
         }
       }
       this.showTypes = !this.showTypes;
@@ -50,11 +52,10 @@ export const useRoomStore = defineStore("roomStore", {
     changeType(event: Event) {
       const newType = (event.target as HTMLInputElement).dataset.type;
       if (this.activeElement && newType) {
-        this.rooms[+this.activeElement].type = newType;
+        this.rooms[this.activeElement.y][this.activeElement.x].type = newType;
         addNewRooms(this.$state);
-      }
-      else if (this.activeElement && !newType)
-        this.rooms[+this.activeElement].type = "";
+      } else if (this.activeElement && !newType)
+        this.rooms[this.activeElement.y][this.activeElement.x].type = "";
     },
     getTitle(type: string) {
       // Which is the best way ?

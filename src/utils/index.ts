@@ -2,84 +2,107 @@ import type { RoomState } from "@/interfaces";
 
 export const getEmptyFloor = () => {
   return [
-    { id: "0", type: "", x: 0, y: 0, obstacles: [] },
-    { id: "1", type: "", x: 1, y: 0, obstacles: [] },
-    { id: "2", type: "", x: 2, y: 0, obstacles: [] },
-    { id: "3", type: "", x: 0, y: 1, obstacles: [] },
-    { id: "4", type: "empty", x: 1, y: 1, obstacles: [] },
-    { id: "5", type: "", x: 2, y: 1, obstacles: [] },
-    { id: "6", type: "", x: 0, y: 2, obstacles: [] },
-    { id: "7", type: "", x: 1, y: 2, obstacles: [] },
-    { id: "8", type: "", x: 2, y: 2, obstacles: [] },
-  ]
-}
-
-// export const getEmptyFloor = () => [
-//   [
-//     { id: "0", type: "", x: 0, y: 0, obstacles: [] },
-//     { id: "1", type: "", x: 1, y: 0, obstacles: [] },
-//     { id: "2", type: "", x: 2, y: 0, obstacles: [] },
-//   ],
-//   [
-//     { id: "3", type: "", x: 0, y: 1, obstacles: [] },
-//     { id: "4", type: "empty", x: 1, y: 1, obstacles: [] },
-//     { id: "5", type: "", x: 2, y: 1, obstacles: [] },
-//   ],
-//   [
-//     { id: "6", type: "", x: 0, y: 2, obstacles: [] },
-//     { id: "7", type: "", x: 1, y: 2, obstacles: [] },
-//     { id: "8", type: "", x: 2, y: 2, obstacles: [] },
-//   ],
-// ];
+    [
+      { id: "00", type: "", x: 0, y: 0, obstacles: [] },
+      { id: "01", type: "", x: 1, y: 0, obstacles: [] },
+      { id: "02", type: "", x: 2, y: 0, obstacles: [] },
+    ],
+    [
+      { id: "10", type: "", x: 0, y: 1, obstacles: [] },
+      { id: "11", type: "empty", x: 1, y: 1, obstacles: [] },
+      { id: "12", type: "", x: 2, y: 1, obstacles: [] },
+    ],
+    [
+      { id: "20", type: "", x: 0, y: 2, obstacles: [] },
+      { id: "21", type: "", x: 1, y: 2, obstacles: [] },
+      { id: "22", type: "", x: 2, y: 2, obstacles: [] },
+    ],
+  ];
+};
 
 export const addNewRooms = (state: RoomState) => {
   const activeElement = state.activeElement;
-  if (activeElement) {
-    const activeX = +state.rooms[+activeElement].x;
-    const activeY = +state.rooms[+activeElement].y;
 
-    const topRoom = state.rooms.filter(
-      (room) => room.y === activeY - 1 && room.x === activeX
-    )[0];
-    const rightRoom = state.rooms.filter(
-      (room) => room.y === activeY && room.x === activeX + 1
-    )[0];
-    const bottomRoom = state.rooms.filter(
-      (room) => room.y === activeY + 1 && room.x === activeX
-    )[0];
-    const leftRoom = state.rooms.filter(
-      (room) => room.y === activeY && room.x === activeX - 1
-    )[0];
+  let topRoom = null;
+  let bottomRoom = null;
 
-    // if (!topRoom) this.rooms.push({ id: "", type: "", x: activeX, y: activeY - 1, obstacles: [] });
-    // if (!rightRoom) this.rooms.push({ id: "", type: "", x: activeX + 1, y: activeY, obstacles: [] });
-    // if (!bottomRoom) this.rooms.push({ id: "", type: "", x: activeX, y: activeY + 1, obstacles: [] });
-    // if (!leftRoom) this.rooms.push({ id: "", type: "", x: activeX - 1, y: activeY, obstacles: [] });
-
-    if (topRoom && rightRoom && bottomRoom && leftRoom) return;
-
-    if (!rightRoom)
-      state.rooms.splice(+activeElement + 1, 0, {
-        id: "",
-        type: "treasure",
-        x: activeX + 1,
-        y: activeY,
-        obstacles: [],
-      });
-    if (!leftRoom)
-      state.rooms.splice(+activeElement, 0, {
-        id: "",
-        type: "treasure",
-        x: activeX - 1,
-        y: activeY,
-        obstacles: [],
-      });
-
-    state.rooms.forEach((room, index) => (room.id = index.toString()));
-
-    const roomsPerLine = state.rooms.filter((room) => room.y === 0).length;
-    state.floorSize = 58 * roomsPerLine + 2 + roomsPerLine * 4 + "px";
-
-    console.log(state.rooms);
+  try {
+    topRoom = state.rooms[activeElement.y - 1][activeElement.x];
+  } catch {
+    topRoom = null;
   }
+
+  const rightRoom = state.rooms[activeElement.y][activeElement.x + 1];
+
+  try {
+    bottomRoom = state.rooms[activeElement.y + 1][activeElement.x];
+  } catch {
+    bottomRoom = null;
+  }
+
+  const leftRoom = state.rooms[activeElement.y][activeElement.x - 1];
+
+  if (topRoom && rightRoom && bottomRoom && leftRoom) return;
+
+  if (!topRoom) {
+    const newLine = [];
+    for (let n = 0; n < state.rooms[0].length; n += 1) {
+      newLine.push({ id: `0${n}`, type: "", x: n, y: 0, obstacles: [] });
+    }
+    state.rooms.splice(0, 0, newLine);
+    state.rooms.forEach((rooms, index) => {
+      if (index > 0) {
+        rooms.forEach((room) => {
+          room.y = room.y + 1;
+        });
+      }
+    });
+  }
+
+  if (!rightRoom) {
+    state.rooms.forEach((line, index) => {
+      line.push({ id: "", type: "", x: line.length, y: index, obstacles: [] });
+    });
+  }
+
+  if (!bottomRoom) {
+    const newLine = [];
+    for (let n = 0; n < state.rooms[0].length; n += 1) {
+      newLine.push({
+        id: "",
+        type: "",
+        x: n,
+        y: state.rooms.length,
+        obstacles: [],
+      });
+    }
+    state.rooms.push(newLine);
+  }
+
+  if (!leftRoom) {
+    state.rooms.forEach((line, index) => {
+      line.unshift({
+        id: `${index}0`,
+        type: "",
+        x: 0,
+        y: index,
+        obstacles: [],
+      });
+      line.forEach((room, index) => {
+        if (index > 0) {
+          room.x = room.x + 1;
+          room.id = `${room.y.toString()}${room.x.toString()}`;
+        }
+      });
+    });
+  }
+
+  state.rooms.forEach((line) => {
+    line.forEach((room) => {
+      room.id = `${room.y.toString()}${room.x.toString()}`;
+    });
+  });
+
+  const roomsPerLine = state.rooms[0].filter((room) => room.y === 0).length;
+  state.floorSize = 58 * roomsPerLine + 2 + roomsPerLine * 4 + "px";
 };

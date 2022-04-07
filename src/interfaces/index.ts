@@ -6,13 +6,21 @@ export interface Room {
   obstacles: string[];
 }
 
+export type Line = Array<Room>;
+
+export interface ActiveElement {
+  x: number;
+  y: number;
+}
+
 export interface RoomState {
   showTypes: boolean;
   showObstacles: boolean;
-  activeElement: string | null;
+  activeElement: ActiveElement;
   floorSize: string;
-  rooms: Room[];
+  rooms: Line[];
 }
+
 
 export interface PotentialSuper {
   room: Room;
