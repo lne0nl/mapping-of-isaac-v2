@@ -6,6 +6,7 @@ const store = useRoomStore();
 const types = Object.keys(store.getTypes);
 const selectType = (e: Event) => {
   store.changeType(e);
+  store.setSecret();
   store.toggleType(e);
 }
 </script>

@@ -10,7 +10,10 @@
         <Room
           v-for="(room) in line"
           :title="room.type ? store.getTitle(room.type) : ''"
-          :class="room.type ? 'type' : ''"
+          :class="[
+            room.type ? 'type' : '',
+            room.type === ('secret' || 'super') ? 'secret' : ''
+          ]"
           :id="room.id"
           :key="room.id"
           :type="room.type"

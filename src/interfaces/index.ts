@@ -20,9 +20,3 @@ export interface RoomState {
   floorSize: string;
   rooms: Line[];
 }
-
-
-export interface PotentialSuper {
-  room: Room;
-  position: string;
-}

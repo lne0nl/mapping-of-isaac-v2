@@ -23,23 +23,13 @@ export const getEmptyFloor = () => {
 export const addNewRooms = (state: RoomState) => {
   const activeElement = state.activeElement;
 
-  let topRoom = null;
-  let bottomRoom = null;
-
-  try {
-    topRoom = state.rooms[activeElement.y - 1][activeElement.x];
-  } catch {
-    topRoom = null;
-  }
-
+  const topRoom = state.rooms[activeElement.y - 1]
+    ? state.rooms[activeElement.y - 1][activeElement.x]
+    : null;
   const rightRoom = state.rooms[activeElement.y][activeElement.x + 1];
-
-  try {
-    bottomRoom = state.rooms[activeElement.y + 1][activeElement.x];
-  } catch {
-    bottomRoom = null;
-  }
-
+  const bottomRoom = state.rooms[activeElement.y + 1]
+    ? state.rooms[activeElement.y + 1][activeElement.x]
+    : null;
   const leftRoom = state.rooms[activeElement.y][activeElement.x - 1];
 
   if (topRoom && rightRoom && bottomRoom && leftRoom) return;
