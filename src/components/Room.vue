@@ -10,9 +10,6 @@ defineProps<{
 <template>
   <button :title="title ? title : 'No Room'" :class="'room'" :id="id" v-memo="[type, obstacles]" :data-type="type">
     <img v-if="type && type !== 'empty'" :class="`type-img ${type === 'secret' || 'super' ? 'secret' : ''}`" :src="`/src/assets/rooms/${type}.png`" />
-    <div class="obstacles" v-if="obstacles?.length">
-      <div v-for="obstacle in obstacles" :key="obstacle" :class="`obstacle obstacle-${obstacle}`"></div>
-    </div>
   </button>
 </template>
 

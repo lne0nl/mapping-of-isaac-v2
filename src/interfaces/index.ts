@@ -15,8 +15,14 @@ export interface ActiveElement {
 
 export interface RoomState {
   showTypes: boolean;
+  showRooms: boolean;
   showObstacles: boolean;
   activeElement: ActiveElement;
   floorSize: string;
   rooms: Line[];
+}
+
+export interface Obstacle {
+  data: string[];
+  class: string;
 }

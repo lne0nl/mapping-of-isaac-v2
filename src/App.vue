@@ -12,7 +12,8 @@
           :title="room.type ? store.getTitle(room.type) : ''"
           :class="[
             room.type ? 'type' : '',
-            room.type === ('secret' || 'super') ? 'secret' : ''
+            room.type === ('secret' || 'super') ? 'secret' : '',
+            room.obstacles ? getObstaclesClass(room.obstacles) : '',
           ]"
           :id="room.id"
           :key="room.id"
@@ -33,6 +34,21 @@
       </button>
     </div>
   </main>
+  <footer>
+    Mapping of Isaac V.2 -
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+      <img
+        alt="Licence Creative Commons"
+        style="border-width:0"
+        src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"
+      />
+    </a>
+    <br />Cette œuvre est mise à disposition selon les termes de la
+    <a
+      rel="license"
+      href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+    >Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.
+  </footer>
 </template>
 
 <script setup lang="ts">
@@ -45,10 +61,14 @@ const store = useRoomStore();
 const { rooms, showTypes, floorSize } = storeToRefs(store);
 // const roomsPerLine = rooms.value.filter((room) => room.y === 0).length;
 // const roomWrapperWidth = 58 * roomsPerLine + 2 + roomsPerLine * 4;
+const getObstaclesClass = (obstacles: string[]) => obstacles.toString().trim().split(',').join('-');
 const raz = store.raz;
 </script>
 
 <style lang="scss">
+@mixin box-shadow($shadow...) {
+  box-shadow: $shadow;
+}
 body,
 html,
 * {
@@ -59,6 +79,14 @@ main {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  padding: 5px 0;
+  text-align: center;
+  transform: translateX(-50%);
 }
 
 h1 {
@@ -83,6 +111,67 @@ button {
   border-radius: 5px;
   border: 1px solid black;
   background-color: black;
+}
+
+.room {
+  &.top {
+    @include box-shadow(0 6px 0 red inset);
+  }
+
+  &.right {
+    @include box-shadow(-6px 0 0 red inset);
+  }
+  &.bottom {
+    @include box-shadow(0px -6px 0 red inset);
+  }
+
+  &.left {
+    @include box-shadow(6px 0 0 red inset);
+  }
+
+  &.top-bottom {
+    @include box-shadow(0 6px 0 red inset, 0px -6px 0 red inset);
+  }
+
+  &.right-left {
+    @include box-shadow(-6px 0 0 red inset, 6px 0 0 red inset);
+  }
+
+  &.top-right {
+    @include box-shadow(0 6px 0 red inset, -6px 0 0 red inset);
+  }
+
+  &.right-bottom {
+    @include box-shadow(-6px 0 0 red inset, 0px -6px 0 red inset)
+  }
+
+  &.bottom-left {
+    @include box-shadow(0px -6px 0 red inset, 6px 0 0 red inset)
+  }
+
+  &.top-left {
+    @include box-shadow(0 6px 0 red inset, 6px 0 0 red inset)
+  }
+
+  &.top-right-left {
+    @include box-shadow(0 6px 0 red inset, -6px 0 0 red inset, 6px 0 0 red inset);
+  }
+
+  &.top-right-bottom {
+    @include box-shadow(0 6px 0 red inset, -6px 0 0 red inset, 0px -6px 0 red inset);
+  }
+
+  &.right-bottom-left {
+    @include box-shadow(-6px 0 0 red inset, 0px -6px 0 red inset, 6px 0 0 red inset)
+  }
+
+  &.top-bottom-left {
+    @include box-shadow(0 6px 0 red inset, 0px -6px 0 red inset, 6px 0 0 red inset);
+  }
+
+  &.top-right-bottom-left {
+    @include box-shadow(0 6px 0 red inset, -6px 0 0 red inset, 0px -6px 0 red inset, 6px 0 0 red inset);
+  }
 }
 
 .actions {

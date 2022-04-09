@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { Line, RoomState, ActiveElement } from "@/interfaces";
+import type { Line, RoomState, ActiveElement, Obstacle } from "@/interfaces";
 import { getEmptyFloor, addNewRooms } from "@/utils";
 
 const types = {
@@ -22,6 +22,73 @@ const types = {
   super: "Super Secret Room",
 };
 
+const obstacleList: Obstacle[] = [
+  {
+    data: [],
+    class: "",
+  },
+  {
+    data: ["top"],
+    class: "",
+  },
+  {
+    data: ["right"],
+    class: "",
+  },
+  {
+    data: ["bottom"],
+    class: "",
+  },
+  {
+    data: ["left"],
+    class: "",
+  },
+  {
+    data: ["top", "bottom"],
+    class: "",
+  },
+  {
+    data: ["right", "left"],
+    class: "",
+  },
+  {
+    data: ["top", "right"],
+    class: "",
+  },
+  {
+    data: ["right", "bottom"],
+    class: "",
+  },
+  {
+    data: ["bottom", "left"],
+    class: "",
+  },
+  {
+    data: ["top", "left"],
+    class: "",
+  },
+  {
+    data: ["top", "right", "left"],
+    class: "",
+  },
+  {
+    data: ["top", "right", "bottom"],
+    class: "",
+  },
+  {
+    data: ["right", "bottom", "left"],
+    class: "",
+  },
+  {
+    data: ["top", "bottom", "left"],
+    class: "",
+  },
+  {
+    data: ["top", "right", "bottom", "left"],
+    class: "",
+  },
+];
+
 const rooms: Line[] = getEmptyFloor();
 
 export const useRoomStore = defineStore("roomStore", {
@@ -29,6 +96,7 @@ export const useRoomStore = defineStore("roomStore", {
     return {
       showTypes: false,
       showObstacles: false,
+      showRooms: true,
       activeElement: { x: 0, y: 0 },
       floorSize: "188px",
       rooms,
@@ -43,13 +111,32 @@ export const useRoomStore = defineStore("roomStore", {
       if (event) {
         const lineIndex = (event.target as HTMLInputElement).dataset.y;
         const columnIndex = (event.target as HTMLInputElement).dataset.x;
+        const obstacles = (event.target as HTMLInputElement).dataset.obstacles;
+        let eventSource = '';
 
         if (columnIndex && lineIndex) {
+          eventSource = 'fromMap';
           this.activeElement = { y: +lineIndex, x: +columnIndex };
-          this.showObstacles = !!this.rooms[+lineIndex][+columnIndex].type;
+        }
+        if (obstacles) eventSource = 'fromObstacles';
+
+        switch (eventSource) {
+          case 'fromMap':
+            this.showTypes = true;
+            this.showRooms = true;
+            this.showObstacles = false;
+          break;
+          case 'fromObstacles':
+            this.showTypes = false;
+            this.showRooms = true;
+            this.showObstacles = false;
+          break;
+            default:
+              this.showTypes = false;
+              this.showRooms = true;
+              this.showObstacles = false;
         }
       }
-      this.showTypes = !this.showTypes;
     },
     changeType(event: Event) {
       const newType = (event.target as HTMLInputElement).dataset.type;
@@ -65,6 +152,9 @@ export const useRoomStore = defineStore("roomStore", {
       // return types[type as keyof Types]; // Works with an interface
       return types[type as keyof typeof types]; // Works when no interface
       // return (types as never)[type];
+    },
+    addObstacles(obstacles: string[]) {
+      this.rooms[this.activeElement.y][this.activeElement.x].obstacles = obstacles;
     },
     setSecret() {
       const secretRooms: ActiveElement[] = [];
@@ -166,5 +256,8 @@ export const useRoomStore = defineStore("roomStore", {
     getTypes() {
       return types;
     },
+    getObstacles() {
+      return obstacleList;
+    }
   },
 });

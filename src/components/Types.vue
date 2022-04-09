@@ -1,12 +1,24 @@
 <script setup lang="ts">
 import Room from '@/components/Room.vue';
+import Obstacles from './Obstacles.vue';
 import { useRoomStore } from '@/stores/useRoom';
+import { storeToRefs } from 'pinia';
 
 const store = useRoomStore();
 const types = Object.keys(store.getTypes);
+const obstacles = store.getObstacles;
+const { showRooms, showObstacles } = storeToRefs(store);
 types.splice(types.indexOf('super') - 1, 2);
 const selectType = (e: Event) => {
   store.changeType(e);
+  showObstacles.value = true;
+  showRooms.value = false;
+}
+const selectObstacle = (e: Event) => {
+  let dataObstacles = (e.target as HTMLInputElement).dataset.obstacles;
+  let obstacles: string[] = [];
+  if (dataObstacles) obstacles = dataObstacles.split(",").map((value) => value.trim());
+  store.addObstacles(obstacles);
   store.setSecret();
   store.toggleType(e);
 }
@@ -16,16 +28,27 @@ const selectType = (e: Event) => {
   <div class="backdrop" @click.self="store.toggleType"></div>
   <div class="types">
     <div class="container">
-      <Room tabindex="0" @click="selectType" />
-      <Room
-        v-for="(type) in types"
-        :title="store.getTitle(type)"
-        :key="type"
-        class="type"
-        :type="type"
-        tabindex="0"
-        @click="selectType"
-      />
+      <template v-if="showRooms">
+        <Room tabindex="0" @click="selectType" />
+        <Room
+          v-for="(type) in types"
+          :title="store.getTitle(type)"
+          :key="type"
+          class="type"
+          :type="type"
+          tabindex="0"
+          @click="selectType"
+        />
+      </template>
+      <template v-if="showObstacles">
+        <Obstacles
+          v-for="(obstacle, index) in obstacles"
+          :key="index"
+          @click="selectObstacle"
+          :obstacles="obstacle.data"
+          class="obstacle"
+        />
+      </template>
     </div>
   </div>
 </template>
