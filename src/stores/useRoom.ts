@@ -1,6 +1,19 @@
 import { defineStore } from "pinia";
-import type { Line, RoomState, ActiveElement, Obstacle } from "@/interfaces";
-import { getEmptyFloor, addNewRooms } from "@/utils";
+import type {
+  Line,
+  RoomState,
+  ActiveElement,
+  Obstacle,
+  Room,
+} from "@/interfaces";
+import {
+  getEmptyFloor,
+  addNewRooms,
+  getTopRoom,
+  getRightRoom,
+  getBottomRoom,
+  getLeftRoom,
+} from "@/utils";
 
 const types = {
   arcade: "Arcade Room",
@@ -112,29 +125,37 @@ export const useRoomStore = defineStore("roomStore", {
         const lineIndex = (event.target as HTMLInputElement).dataset.y;
         const columnIndex = (event.target as HTMLInputElement).dataset.x;
         const obstacles = (event.target as HTMLInputElement).dataset.obstacles;
-        let eventSource = '';
+        const hasType = (event.target as HTMLInputElement).dataset.type;
+        let eventSource = "";
 
         if (columnIndex && lineIndex) {
-          eventSource = 'fromMap';
+          eventSource = "fromMap";
           this.activeElement = { y: +lineIndex, x: +columnIndex };
         }
-        if (obstacles) eventSource = 'fromObstacles';
+        if (columnIndex && lineIndex && hasType)
+          eventSource = "fromMapWithType";
+        if (obstacles) eventSource = "fromObstacles";
 
         switch (eventSource) {
-          case 'fromMap':
+          case "fromMap":
             this.showTypes = true;
             this.showRooms = true;
             this.showObstacles = false;
-          break;
-          case 'fromObstacles':
+            break;
+          case "fromObstacles":
             this.showTypes = false;
             this.showRooms = true;
             this.showObstacles = false;
-          break;
-            default:
-              this.showTypes = false;
-              this.showRooms = true;
-              this.showObstacles = false;
+            break;
+          case "fromMapWithType":
+            this.showTypes = true;
+            this.showRooms = true;
+            this.showObstacles = true;
+            break;
+          default:
+            this.showTypes = false;
+            this.showRooms = true;
+            this.showObstacles = false;
         }
       }
     },
@@ -154,7 +175,8 @@ export const useRoomStore = defineStore("roomStore", {
       // return (types as never)[type];
     },
     addObstacles(obstacles: string[]) {
-      this.rooms[this.activeElement.y][this.activeElement.x].obstacles = obstacles;
+      this.rooms[this.activeElement.y][this.activeElement.x].obstacles =
+        obstacles;
     },
     setSecret() {
       const secretRooms: ActiveElement[] = [];
@@ -251,6 +273,96 @@ export const useRoomStore = defineStore("roomStore", {
         );
       }
     },
+    setSuperSecret() {
+      let bossRoom = false;
+      this.rooms.forEach((line) => {
+        line.forEach((room) => {
+          if (room.type === "super") room.type = "";
+        });
+      });
+      this.rooms.forEach((line) => {
+        if (line.filter((room) => room.type === "boss")[0]) {
+          bossRoom = true;
+          return;
+        }
+      });
+      if (!bossRoom) return;
+      const superSecretRoom: Room[] = [];
+
+      this.rooms.forEach((line) => {
+        line.forEach((room) => {
+          let adjacentRoomsCount = 0;
+
+          const topRoom = getTopRoom(room, this.$state);
+          const rightRoom = getRightRoom(room, this.$state);
+          const bottomRoom = getBottomRoom(room, this.$state);
+          const leftRoom = getLeftRoom(room, this.$state);
+
+          if (
+            topRoom &&
+            topRoom.type &&
+            topRoom.type !== "boss" &&
+            topRoom.type !== "super" &&
+            topRoom.type !== "secret" &&
+            !topRoom.obstacles.includes("bottom")
+          ) {
+            adjacentRoomsCount += 1;
+          }
+          if (
+            rightRoom &&
+            rightRoom.type &&
+            rightRoom.type !== "boss" &&
+            rightRoom.type !== "super" &&
+            rightRoom.type !== "secret" &&
+            !rightRoom.obstacles.includes("left")
+          ) {
+            adjacentRoomsCount += 1;
+          }
+          if (
+            bottomRoom &&
+            bottomRoom.type &&
+            bottomRoom.type !== "boss" &&
+            bottomRoom.type !== "super" &&
+            bottomRoom.type !== "secret" &&
+            !bottomRoom.obstacles.includes("top")
+          ) {
+            adjacentRoomsCount += 1;
+          }
+          if (
+            leftRoom &&
+            leftRoom.type &&
+            leftRoom.type !== "boss" &&
+            leftRoom.type !== "super" &&
+            leftRoom.type !== "secret" &&
+            !leftRoom.obstacles.includes("right")
+          ) {
+            adjacentRoomsCount += 1;
+          }
+
+          if (adjacentRoomsCount === 1 && !room.type)
+            superSecretRoom.push(room);
+        });
+      });
+      superSecretRoom.forEach((room) => {
+        // Recheck conditions
+        const topRoom = getTopRoom(room, this.$state);
+        const rightRoom = getRightRoom(room, this.$state);
+        const bottomRoom = getBottomRoom(room, this.$state);
+        const leftRoom = getLeftRoom(room, this.$state);
+        if (!room.type) room.type = "super";
+        if (
+          topRoom?.obstacles.length ||
+          topRoom?.type === "boss" ||
+          rightRoom?.obstacles.length ||
+          rightRoom?.type === "boss" ||
+          bottomRoom?.obstacles.length ||
+          bottomRoom?.type === "boss" ||
+          leftRoom?.obstacles.length ||
+          leftRoom?.type === "boss"
+        )
+          room.type = "";
+      });
+    },
   },
   getters: {
     getTypes() {
@@ -258,6 +370,6 @@ export const useRoomStore = defineStore("roomStore", {
     },
     getObstacles() {
       return obstacleList;
-    }
+    },
   },
 });

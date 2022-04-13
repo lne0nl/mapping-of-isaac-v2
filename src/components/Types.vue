@@ -19,6 +19,7 @@ const selectObstacle = (e: Event) => {
   let obstacles: string[] = [];
   if (dataObstacles) obstacles = dataObstacles.split(",").map((value) => value.trim());
   store.addObstacles(obstacles);
+  store.setSuperSecret();
   store.setSecret();
   store.toggleType(e);
 }

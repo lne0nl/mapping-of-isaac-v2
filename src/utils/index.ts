@@ -1,4 +1,4 @@
-import type { RoomState } from "@/interfaces";
+import type { Room, RoomState } from "@/interfaces";
 
 export const getEmptyFloor = () => {
   return [
@@ -47,6 +47,7 @@ export const addNewRooms = (state: RoomState) => {
         });
       }
     });
+    activeElement.y = activeElement.y + 1;
   }
 
   if (!rightRoom) {
@@ -85,6 +86,7 @@ export const addNewRooms = (state: RoomState) => {
         }
       });
     });
+    activeElement.x = activeElement.x + 1;
   }
 
   state.rooms.forEach((line) => {
@@ -96,3 +98,21 @@ export const addNewRooms = (state: RoomState) => {
   const roomsPerLine = state.rooms[0].filter((room) => room.y === 0).length;
   state.floorSize = 58 * roomsPerLine + 2 + roomsPerLine * 4 + "px";
 };
+
+export const getTopRoom = (room: Room, state: RoomState) => {
+  return state.rooms[room.y - 1] ? state.rooms[room.y - 1][room.x] : null;
+};
+
+export const getRightRoom = (room: Room, state: RoomState) => {
+  return state.rooms[room.y][room.x + 1]
+    ? state.rooms[room.y][room.x + 1]
+    : null;
+};
+
+export const getBottomRoom = (room: Room, state: RoomState) => {
+  return state.rooms[room.y + 1] ? state.rooms[room.y + 1][room.x] : null;
+};
+
+export const getLeftRoom = (room: Room, state: RoomState) => {
+  return state.rooms[room.y][room.x - 1] ? state.rooms[room.y][room.x - 1] : null;
+}
