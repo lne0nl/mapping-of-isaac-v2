@@ -1,11 +1,5 @@
 import { defineStore } from "pinia";
-import type {
-  Line,
-  RoomState,
-  ActiveElement,
-  Obstacle,
-  Room,
-} from "@/interfaces";
+import type { Line, RoomState, ActiveElement, Room } from "@/interfaces";
 import {
   getEmptyFloor,
   addNewRooms,
@@ -15,92 +9,7 @@ import {
   getLeftRoom,
 } from "@/utils";
 
-const types = {
-  arcade: "Arcade Room",
-  bedroom: "Bedroom",
-  boss: "Boss Room",
-  challenge: "Challenge Room",
-  curse: "Curse Room",
-  dice: "Dice Room",
-  library: "Library",
-  miniboss: "Mini Boss Room",
-  planetarium: "Planetarium",
-  sacrifice: "Sacrifice Room",
-  shop: "Shop",
-  superchallenge: "Super Challenge Room",
-  treasure: "Treasure Room",
-  vault: "Vault",
-  empty: "Empty",
-  secret: "Secret Room",
-  super: "Super Secret Room",
-};
-
-const obstacleList: Obstacle[] = [
-  {
-    data: [],
-    class: "",
-  },
-  {
-    data: ["top"],
-    class: "",
-  },
-  {
-    data: ["right"],
-    class: "",
-  },
-  {
-    data: ["bottom"],
-    class: "",
-  },
-  {
-    data: ["left"],
-    class: "",
-  },
-  {
-    data: ["top", "bottom"],
-    class: "",
-  },
-  {
-    data: ["right", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "right"],
-    class: "",
-  },
-  {
-    data: ["right", "bottom"],
-    class: "",
-  },
-  {
-    data: ["bottom", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "right", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "right", "bottom"],
-    class: "",
-  },
-  {
-    data: ["right", "bottom", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "bottom", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "right", "bottom", "left"],
-    class: "",
-  },
-];
+import { types, obstacleList } from "@/utils/fixtures";
 
 const rooms: Line[] = getEmptyFloor();
 
@@ -165,7 +74,6 @@ export const useRoomStore = defineStore("roomStore", {
         this.rooms[this.activeElement.y][this.activeElement.x].type = newType;
         addNewRooms(this.$state);
       } else if (this.activeElement && !newType)
-        // @TODO: remove rooms, perhaps
         this.rooms[this.activeElement.y][this.activeElement.x].type = "";
     },
     getTitle(type: string) {
