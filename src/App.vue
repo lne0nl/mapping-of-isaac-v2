@@ -7,24 +7,15 @@
   <main>
     <div class="room-wrapper" :style="{ width: floorSize }">
       <template v-for="(line) in rooms">
-        <Room
-          v-for="(room) in line"
-          :title="room.type ? store.getTitle(room.type) : ''"
-          :class="[
-            room.type ? 'type' : '',
-            room.type === 'super' ? 'secret' : '',
-            room.type === 'secret' ? 'secret' : '',
-            room.obstacles ? getObstaclesClass(room.obstacles) : '',
-          ]"
-          :id="room.id"
-          :key="room.id"
-          :type="room.type"
-          :obstacles="room.obstacles"
-          :tabindex="showTypes ? -1 : 0"
-          :data-x="room.x"
-          :data-y="room.y"
-          @click="store.toggleType"
-        />
+        <Room v-for="(room) in line" :title="room.type ? store.getTitle(room.type) : ''" :class="[
+          room.type ? 'type' : '',
+          room.type === 'super' ? 'secret' : '',
+          room.type === 'secret' ? 'secret' : '',
+          room.type === 'corridor_v' ? 'corridor-v' : '',
+          room.type === 'corridor_h' ? 'corridor-h' : '',
+          room.obstacles ? getObstaclesClass(room.obstacles) : '',
+        ]" :id="room.id" :key="room.id" :type="room.type" :obstacles="room.obstacles" :tabindex="showTypes ? -1 : 0"
+          :data-x="room.x" :data-y="room.y" @click="store.toggleType" />
       </template>
     </div>
     <Types v-if="showTypes" />
@@ -38,17 +29,12 @@
   <footer>
     Mapping of Isaac V.2 -
     <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
-      <img
-        alt="Licence Creative Commons"
-        style="border-width:0"
-        src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"
-      />
+      <img alt="Licence Creative Commons" style="border-width:0"
+        src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" />
     </a>
     <br />Cette œuvre est mise à disposition selon les termes de la
-    <a
-      rel="license"
-      href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
-    >Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas
+      d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.
   </footer>
 </template>
 
@@ -70,17 +56,20 @@ const raz = store.raz;
 @mixin box-shadow($shadow...) {
   box-shadow: $shadow;
 }
+
 body,
 html,
 * {
   box-sizing: border-box;
 }
+
 main {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
 }
+
 footer {
   position: absolute;
   bottom: 0;
@@ -122,6 +111,7 @@ button {
   &.right {
     @include box-shadow(-6px 0 0 red inset);
   }
+
   &.bottom {
     @include box-shadow(0px -6px 0 red inset);
   }

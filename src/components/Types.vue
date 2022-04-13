@@ -35,7 +35,11 @@ const selectObstacle = (e: Event) => {
           v-for="(type) in types"
           :title="store.getTitle(type)"
           :key="type"
-          class="type"
+          :class="[
+            'type',
+            type === 'corridor_v' ? 'corridor-v' : '',
+            type === 'corridor_h' ? 'corridor-h' : '',
+          ]"
           :type="type"
           tabindex="0"
           @click="selectType"

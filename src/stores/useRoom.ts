@@ -228,6 +228,8 @@ export const useRoomStore = defineStore("roomStore", {
             topRoom.type !== "boss" &&
             topRoom.type !== "super" &&
             topRoom.type !== "secret" &&
+            topRoom.type !== "corridor_v" &&
+            topRoom.type !== "corridor_h" &&
             !topRoom.obstacles.includes("bottom")
           ) {
             adjacentRoomsCount += 1;
@@ -238,6 +240,8 @@ export const useRoomStore = defineStore("roomStore", {
             rightRoom.type !== "boss" &&
             rightRoom.type !== "super" &&
             rightRoom.type !== "secret" &&
+            rightRoom.type !== "corridor_v" &&
+            rightRoom.type !== "corridor_h" &&
             !rightRoom.obstacles.includes("left")
           ) {
             adjacentRoomsCount += 1;
@@ -248,6 +252,8 @@ export const useRoomStore = defineStore("roomStore", {
             bottomRoom.type !== "boss" &&
             bottomRoom.type !== "super" &&
             bottomRoom.type !== "secret" &&
+            bottomRoom.type !== "corridor_v" &&
+            bottomRoom.type !== "corridor_h" &&
             !bottomRoom.obstacles.includes("top")
           ) {
             adjacentRoomsCount += 1;
@@ -258,6 +264,8 @@ export const useRoomStore = defineStore("roomStore", {
             leftRoom.type !== "boss" &&
             leftRoom.type !== "super" &&
             leftRoom.type !== "secret" &&
+            leftRoom.type !== "corridor_v" &&
+            leftRoom.type !== "corridor_h" &&
             !leftRoom.obstacles.includes("right")
           ) {
             adjacentRoomsCount += 1;
@@ -277,12 +285,20 @@ export const useRoomStore = defineStore("roomStore", {
         if (
           topRoom?.obstacles.includes("bottom") ||
           topRoom?.type === "boss" ||
+          topRoom?.type === 'corridor_v' ||
+          topRoom?.type === 'corridor_h' ||
           rightRoom?.obstacles.includes("left") ||
           rightRoom?.type === "boss" ||
+          rightRoom?.type === 'corridor_v' ||
+          rightRoom?.type === 'corridor_h' ||
           bottomRoom?.obstacles.includes("top") ||
           bottomRoom?.type === "boss" ||
+          bottomRoom?.type === 'corridor_v' ||
+          bottomRoom?.type === 'corridor_h' ||
           leftRoom?.obstacles.includes("right") ||
-          leftRoom?.type === "boss"
+          leftRoom?.type === "boss" ||
+          leftRoom?.type === 'corridor_v' ||
+          leftRoom?.type === 'corridor_h'
         )
           room.type = "";
       });

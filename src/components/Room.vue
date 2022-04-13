@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <button :title="title ? title : 'No Room'" :class="'room'" :id="id" v-memo="[type, obstacles]" :data-type="type">
-    <img v-if="type && type !== 'empty'" :class="`type-img`"
+    <img v-if="type && type !== 'empty' && type !== 'corridor_v' && type !== 'corridor_h'" :class="`type-img`"
       :src="`/src/assets/rooms/${type}.png`" />
   </button>
 </template>
@@ -26,8 +26,17 @@ defineProps<{
   &.type {
     background-color: #747474;
 
-    &.secret, &.super {
+    &.secret,
+    &.super {
       background-color: black;
+    }
+
+    &.corridor-v {
+      box-shadow: -8px 0 0 #141414 inset, 8px 0 0 #141414 inset;
+    }
+
+    &.corridor-h {
+      box-shadow: 0 8px 0 #141414 inset, 0px -8px 0 #141414 inset;
     }
   }
 }
