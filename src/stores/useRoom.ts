@@ -212,8 +212,7 @@ export const useRoomStore = defineStore("roomStore", {
             (topRoom.obstacles.includes("bottom") ||
               topRoom.type === "boss" ||
               topRoom.type === "corridor_v" ||
-              topRoom.type === "corridor_h" ||
-              topRoom.type === "super")
+              topRoom.type === "corridor_h")
           )
             return;
           if (
@@ -221,8 +220,7 @@ export const useRoomStore = defineStore("roomStore", {
             (rightRoom.obstacles.includes("left") ||
               rightRoom.type === "boss" ||
               rightRoom.type === "corridor_v" ||
-              rightRoom.type === "corridor_h" ||
-              rightRoom.type === "super")
+              rightRoom.type === "corridor_h")
           )
             return;
           if (
@@ -230,8 +228,7 @@ export const useRoomStore = defineStore("roomStore", {
             (bottomRoom.obstacles.includes("top") ||
               bottomRoom.type === "boss" ||
               bottomRoom.type === "corridor_v" ||
-              bottomRoom.type === "corridor_h" ||
-              bottomRoom.type === "super")
+              bottomRoom.type === "corridor_h")
           )
             return;
           if (
@@ -239,20 +236,39 @@ export const useRoomStore = defineStore("roomStore", {
             (leftRoom.obstacles.includes("right") ||
               leftRoom.type === "boss" ||
               leftRoom.type === "corridor_v" ||
-              leftRoom.type === "corridor_h" ||
-              leftRoom.type === "super")
+              leftRoom.type === "corridor_h")
           )
             return;
 
           let validRoomCount = 0;
 
-          if (topRoom && topRoom.type && topRoom.type !== "secret")
+          if (
+            topRoom &&
+            topRoom.type &&
+            topRoom.type !== "secret" &&
+            topRoom.type !== "super"
+          )
             validRoomCount += 1;
-          if (rightRoom && rightRoom.type && rightRoom.type !== "secret")
+          if (
+            rightRoom &&
+            rightRoom.type &&
+            rightRoom.type !== "secret" &&
+            rightRoom.type !== "super"
+          )
             validRoomCount += 1;
-          if (bottomRoom && bottomRoom.type && bottomRoom.type !== "secret")
+          if (
+            bottomRoom &&
+            bottomRoom.type &&
+            bottomRoom.type !== "secret" &&
+            bottomRoom.type !== "super"
+          )
             validRoomCount += 1;
-          if (leftRoom && leftRoom.type && leftRoom.type !== "secret")
+          if (
+            leftRoom &&
+            leftRoom.type &&
+            leftRoom.type !== "secret" &&
+            leftRoom.type !== "super"
+          )
             validRoomCount += 1;
 
           if (validRoomCount >= 3) secretRooms.push({ x: room.x, y: room.y });
@@ -351,13 +367,13 @@ export const useRoomStore = defineStore("roomStore", {
         const leftRoom = getLeftRoom(room, this.$state);
         if (!room.type) room.type = "super";
         if (
-          topRoom?.obstacles.length ||
+          topRoom?.obstacles.includes("bottom") ||
           topRoom?.type === "boss" ||
-          rightRoom?.obstacles.length ||
+          rightRoom?.obstacles.includes("left") ||
           rightRoom?.type === "boss" ||
-          bottomRoom?.obstacles.length ||
+          bottomRoom?.obstacles.includes("top") ||
           bottomRoom?.type === "boss" ||
-          leftRoom?.obstacles.length ||
+          leftRoom?.obstacles.includes("right") ||
           leftRoom?.type === "boss"
         )
           room.type = "";

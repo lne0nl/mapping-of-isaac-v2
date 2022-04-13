@@ -12,7 +12,8 @@
           :title="room.type ? store.getTitle(room.type) : ''"
           :class="[
             room.type ? 'type' : '',
-            room.type === ('secret' || 'super') ? 'secret' : '',
+            room.type === 'super' ? 'secret' : '',
+            room.type === 'secret' ? 'secret' : '',
             room.obstacles ? getObstaclesClass(room.obstacles) : '',
           ]"
           :id="room.id"
