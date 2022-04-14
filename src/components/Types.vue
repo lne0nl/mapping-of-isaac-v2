@@ -27,34 +27,23 @@ const selectObstacle = (e: Event) => {
 
 <template>
   <div class="backdrop" @click.self="store.toggleType"></div>
-  <div class="types">
-    <div class="container">
-      <template v-if="showRooms">
+  <div class="types" data-cy="modal">
+    <template v-if="showRooms">
+      <div class="container" data-cy="modal-types">
         <Room tabindex="0" @click="selectType" />
-        <Room
-          v-for="(type) in types"
-          :title="store.getTitle(type)"
-          :key="type"
-          :class="[
-            'type',
-            type === 'corridor_v' ? 'corridor-v' : '',
-            type === 'corridor_h' ? 'corridor-h' : '',
-          ]"
-          :type="type"
-          tabindex="0"
-          @click="selectType"
-        />
-      </template>
-      <template v-if="showObstacles">
-        <Obstacles
-          v-for="(obstacle, index) in obstacles"
-          :key="index"
-          @click="selectObstacle"
-          :obstacles="obstacle.data"
-          class="obstacle"
-        />
-      </template>
-    </div>
+        <Room v-for="(type) in types" :title="store.getTitle(type)" :key="type" :class="[
+          'type',
+          type === 'corridor_v' ? 'corridor-v' : '',
+          type === 'corridor_h' ? 'corridor-h' : '',
+        ]" :type="type" tabindex="0" @click="selectType" />
+      </div>
+    </template>
+    <template v-if="showObstacles">
+      <div class="container" data-cy="modal-obstacles">
+        <Obstacles v-for="(obstacle, index) in obstacles" :key="index" @click="selectObstacle"
+          :obstacles="obstacle.data" class="obstacle" />
+      </div>
+    </template>
   </div>
 </template>
 

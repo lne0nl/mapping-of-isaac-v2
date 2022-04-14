@@ -11,14 +11,6 @@ const getClassName = (obstacles: string[] | undefined) => {
   });
   return className;
 }
-// const getClassName = (obstacles: string[] | undefined) => {
-//   let className = '[';
-//   obstacles?.forEach((position, index) => {
-//     if (index !== obstacles.length) className += position;
-//     else className += `${position}]`
-//   })
-//   return className;
-// }
 </script>
 
 <template>
