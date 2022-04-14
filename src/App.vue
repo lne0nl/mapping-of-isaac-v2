@@ -1,7 +1,7 @@
 <template>
   <header>
     <h1>
-      <img :src="'/src/assets/logo.png'" alt="The Mapping of Isaac" title="The Mapping of Isaac" />
+      <img :src="logo" alt="The Mapping of Isaac" title="The Mapping of Isaac" />
     </h1>
   </header>
   <main>
@@ -21,7 +21,7 @@
     <Types v-if="showTypes" />
     <div class="actions">
       <button title="Destroy Floor" class="button" @click="raz" :tabindex="showTypes ? -1 : 0">
-        <img :src="'/src/assets/bomb.png'" alt="Destroy Floor" />
+        <img :src="bomb" alt="Destroy Floor" />
         <br />Destroy the floor
       </button>
     </div>
@@ -43,11 +43,11 @@ import Room from '@/components/Room.vue';
 import { storeToRefs } from 'pinia';
 import { useRoomStore } from '@/stores/useRoom';
 import Types from '@/components/Types.vue';
+import logo from '../src/assets/logo.png';
+import bomb from '@/assets/bomb.png';
 
 const store = useRoomStore();
 const { rooms, showTypes, floorSize } = storeToRefs(store);
-// const roomsPerLine = rooms.value.filter((room) => room.y === 0).length;
-// const roomWrapperWidth = 58 * roomsPerLine + 2 + roomsPerLine * 4;
 const getObstaclesClass = (obstacles: string[]) => obstacles.toString().trim().split(',').join('-');
 const raz = store.raz;
 </script>

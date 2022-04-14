@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import images from '@/utils/images';
+
 defineProps<{
   id?: string;
   type?: string;
@@ -10,7 +12,7 @@ defineProps<{
 <template>
   <button :title="title ? title : 'No Room'" :class="'room'" :id="id" v-memo="[type, obstacles]" :data-type="type">
     <img v-if="type && type !== 'empty' && type !== 'corridor_v' && type !== 'corridor_h'" :class="`type-img`"
-      :src="`/src/assets/rooms/${type}.png`" />
+      :src="images[type as keyof typeof images]" />
   </button>
 </template>
 
