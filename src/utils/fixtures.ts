@@ -19,7 +19,7 @@ export const types = {
   corridor_v: "Vertical Corridor",
   corridor_h: "Horizontal Corridor",
   secret: "Secret Room",
-  super: "Super Secret Room",
+  supersecret: "Super Secret Room",
 };
 
 export const obstacleList: Obstacle[] = [

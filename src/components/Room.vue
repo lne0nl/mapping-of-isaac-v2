@@ -29,7 +29,7 @@ defineProps<{
     background-color: #747474;
 
     &.secret,
-    &.super {
+    &.supersecret {
       background-color: black;
     }
 
