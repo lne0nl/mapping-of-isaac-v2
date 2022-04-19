@@ -1,25 +1,16 @@
-# mapping-of-isaac-v2
+<div align="center">
+    <img src="https://raw.githubusercontent.com/lne0nl/mapping-of-isaac/master/src/assets/logo-rm.png">
+</div>
 
-This template should help get you started developing with Vue 3 in Vite.
-
+<p>
+    <b><a href="https://lne0nl.github.io/mapping-of-isaac/">The Mapping of Isaac</a></b> is a simple website developped in Vue.js for the game <b>Binding of Isaac</b>.
+    It allows you to place the rooms on the map of the floor you are playing, then calculate the probability for the secret rooms placements.
+</p>
+    
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
@@ -57,3 +48,12 @@ npm run test:e2e # or `npm run test:e2e:ci` for headless testing
 ```sh
 npm run lint
 ```
+<div align="center">
+    <img src="https://raw.githubusercontent.com/lne0nl/mapping-of-isaac/master/src/assets/isaac.png" width="100">
+</div>
+
+### TODO
+
+- [ ] Add vizualisation of Super Secret rooms percent chances
+- [ ] Implement Ultra Secrets room calculation
+- [ ] Remove obstacles choice for room types that don't need it

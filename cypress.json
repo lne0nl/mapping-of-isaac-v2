@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://localhost:5050",
+  "baseUrl": "http://localhost:5050/mapping-of-isaac-v2",
   "viewportWidth": 1280,
   "viewportHeight": 720,
   "video": false,
