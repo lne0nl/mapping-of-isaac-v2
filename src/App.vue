@@ -9,7 +9,7 @@
       <template v-for="(line) in rooms">
         <Room v-for="(room) in line" :title="room.type ? store.getTitle(room.type) : ''" :class="[
           room.type ? 'type' : '',
-          room.type === 'super' ? 'secret' : '',
+          room.type === 'supersecret' ? 'secret' : '',
           room.type === 'secret' ? 'secret' : '',
           room.type === 'corridor_v' ? 'corridor-v' : '',
           room.type === 'corridor_h' ? 'corridor-h' : '',

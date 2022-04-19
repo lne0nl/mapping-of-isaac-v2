@@ -10,7 +10,7 @@ import planetarium from "@/assets/rooms/planetarium.png";
 import sacrifice from "@/assets/rooms/sacrifice.png";
 import secret from "@/assets/rooms/secret.png";
 import shop from "@/assets/rooms/shop.png";
-import supersecret from "@/assets/rooms/super.png";
+import supersecret from "@/assets/rooms/supersecret.png";
 import superchallenge from "@/assets/rooms/superchallenge.png";
 import treasure from "@/assets/rooms/treasure.png";
 import vault from "@/assets/rooms/vault.png";

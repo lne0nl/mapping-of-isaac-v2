@@ -8,7 +8,7 @@ const store = useRoomStore();
 const types = Object.keys(store.getTypes);
 const obstacles = store.getObstacles;
 const { showRooms, showObstacles } = storeToRefs(store);
-types.splice(types.indexOf('super') - 1, 2);
+types.splice(types.indexOf('supersecret') - 1, 2);
 const selectType = (e: Event) => {
   store.changeType(e);
   showObstacles.value = true;
