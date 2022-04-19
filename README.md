@@ -1,4 +1,4 @@
-![cypress](https://github.com/lne0nl/mapping-of-isaac/actions/workflows/github-actions-init.yml/badge.svg?branch=master)
+![cypress](https://github.com/lne0nl/mapping-of-isaac-v2/actions/workflows/github-actions-init.yml/badge.svg?branch=master)
 
 <div align="center">
     <img src="https://raw.githubusercontent.com/lne0nl/mapping-of-isaac/master/src/assets/logo-rm.png">
