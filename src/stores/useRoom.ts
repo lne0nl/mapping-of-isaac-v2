@@ -281,7 +281,7 @@ export const useRoomStore = defineStore("roomStore", {
         const rightRoom = getRightRoom(room, this.$state);
         const bottomRoom = getBottomRoom(room, this.$state);
         const leftRoom = getLeftRoom(room, this.$state);
-        if (!room.type) room.type = "super";
+        if (!room.type) room.type = "supersecret";
         if (
           topRoom?.obstacles.includes("bottom") ||
           topRoom?.type === "boss" ||
