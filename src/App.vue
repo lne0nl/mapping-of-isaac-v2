@@ -72,6 +72,7 @@ main {
 
 footer {
   position: absolute;
+  z-index: -1;
   bottom: 0;
   left: 50%;
   padding: 5px 0;
@@ -92,6 +93,14 @@ button {
   padding: 2px;
   border-radius: 5px;
   cursor: pointer;
+}
+
+a {
+  color: red;
+
+  &:visited {
+    color: red;
+  }
 }
 
 .room-wrapper {

@@ -1,5 +1,3 @@
-import type { Obstacle } from "@/interfaces";
-
 export const types = {
   arcade: "Arcade Room",
   bedroom: "Bedroom",
@@ -22,69 +20,21 @@ export const types = {
   supersecret: "Super Secret Room",
 };
 
-export const obstacleList: Obstacle[] = [
-  {
-    data: [],
-    class: "",
-  },
-  {
-    data: ["top"],
-    class: "",
-  },
-  {
-    data: ["right"],
-    class: "",
-  },
-  {
-    data: ["bottom"],
-    class: "",
-  },
-  {
-    data: ["left"],
-    class: "",
-  },
-  {
-    data: ["top", "bottom"],
-    class: "",
-  },
-  {
-    data: ["right", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "right"],
-    class: "",
-  },
-  {
-    data: ["right", "bottom"],
-    class: "",
-  },
-  {
-    data: ["bottom", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "right", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "right", "bottom"],
-    class: "",
-  },
-  {
-    data: ["right", "bottom", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "bottom", "left"],
-    class: "",
-  },
-  {
-    data: ["top", "right", "bottom", "left"],
-    class: "",
-  },
+export const obstacleList = [
+  [],
+  ["top"],
+  ["right"],
+  ["bottom"],
+  ["left"],
+  ["top", "bottom"],
+  ["right", "left"],
+  ["top", "right"],
+  ["right", "bottom"],
+  ["bottom", "left"],
+  ["top", "left"],
+  ["top", "right", "left"],
+  ["top", "right", "bottom"],
+  ["right", "bottom", "left"],
+  ["top", "bottom", "left"],
+  ["top", "right", "bottom", "left"],
 ];

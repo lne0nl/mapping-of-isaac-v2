@@ -41,7 +41,7 @@ const selectObstacle = (e: Event) => {
     <template v-if="showObstacles">
       <div class="container" data-cy="modal-obstacles">
         <Obstacles v-for="(obstacle, index) in obstacles" :key="index" @click="selectObstacle"
-          :obstacles="obstacle.data" class="obstacle" />
+          :obstacles="obstacle" class="obstacle" />
       </div>
     </template>
   </div>

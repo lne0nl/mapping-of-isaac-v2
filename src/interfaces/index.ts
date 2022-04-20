@@ -21,8 +21,3 @@ export interface RoomState {
   floorSize: string;
   rooms: Line[];
 }
-
-export interface Obstacle {
-  data: string[];
-  class: string;
-}
